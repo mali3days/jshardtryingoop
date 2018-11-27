@@ -2,20 +2,20 @@ let register = {};
 let id = 0;
 
 let playerOne = {
-  name: "P1",
-  rase: "Human",
+  name: "Player 1",
+  rase: "Human"
 };
 let playerTwo = {
-  name: "P2",
-  rase: "Gnome",
-}
+  name: "Player 2",
+  rase: "Gnome"
+};
 
 class Game {
   constructor() {
-    this.score = "0:0"
+    this.score = "0:0";
   }
 
-  createCharacter({name, rase}) {
+  createCharacter({ name, rase }) {
     if (rase === "Gnome") {
       return new Gnome(name);
     } else if (rase === "Human") {
@@ -29,18 +29,22 @@ class Game {
   }
 
   startFight() {
-    const {
-      playerTwo,
-      playerOne,
-    } = this;
-    
-    do {
-      console.log(playerOne.attack(playerOne.damage, playerTwo))
-      console.log(playerTwo.attack(playerTwo.damage, playerOne))
+    const { playerTwo, playerOne } = this;
 
-    } while (playerOne.health >= 0)
+    do {
+      playerOne.attack(playerOne.damage, playerTwo);
+      if (playerTwo.health <= 0) {
+        console.log(`${playerOne.name} win`);
+        break;
+      }
+      playerTwo.attack(playerTwo.damage, playerOne);
+      if (playerOne.health <= 0) {
+        console.log(`${playerTwo.name} win`);
+        break;
+      }
+      
+    } while (playerOne.health >= 0 || playerTwo.health >= 0);
   }
-  
 }
 
 class Character {
@@ -62,17 +66,18 @@ class Character {
       }
     };
   }
-  
-  attack({min, max, attacks}, target) {
-    let damage = attacks * Math.floor(Math.random() * (max + 1 - min)) + min;
-    target.health -= damage
-    if (this.helth >= 0 ) {
-      console.log(`${target.name} win`)
-      return `${target.name} win`
-    }
-    return `${this.name} нанес ${damage} урона ${target.name}`
-  }
 
+  attack({ min, max, attacks }, target) {
+    let damage = 0;
+    for (let i = 0; i < attacks; i++) {
+      let hit = Math.floor(Math.random() * (max + 1 - min)) + min;
+      console.log(hit);
+      damage += hit;
+    }
+    target.health -= damage;
+    console.log(`${this.name} нанес ${damage} урона ${target.name}`);
+    return `${this.name} нанес ${damage} урона ${target.name}`;
+  }
 }
 
 class Gnome extends Character {
@@ -80,7 +85,6 @@ class Gnome extends Character {
     super(name);
     this.damage = this.weapons["bow"];
   }
-
 }
 
 class Human extends Character {
@@ -88,14 +92,9 @@ class Human extends Character {
     super(name);
     this.damage = this.weapons["sword"];
   }
-
 }
-
-
-
-
 
 const game = new Game();
 
 game.initGame(playerOne, playerTwo);
-game.startFight()
+game.startFight();
