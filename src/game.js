@@ -10,9 +10,10 @@ let playerTwo = {
   rase: "Gnome"
 };
 
+// класс выполнения всех дейтсвий
 class Game {
   constructor() {
-    this.score = "0:0";
+    this.score = { playerOne: 0, playerTwo: 0 };
   }
 
   createCharacter({ name, rase }) {
@@ -24,29 +25,62 @@ class Game {
   }
 
   initGame(player1, player2) {
+    // Создание 2 играков
     this.playerOne = this.createCharacter(player1);
     this.playerTwo = this.createCharacter(player2);
+    // Создания счета
+    document.body.innerHTML = "";
+    document.body.appendChild(this.render());
   }
 
   startFight() {
     const { playerTwo, playerOne } = this;
+    let round = 1;
+    let list = document.createElement("ul");
 
     do {
-      playerOne.attack(playerOne.damage, playerTwo);
+
+      let item = document.createElement("li");
+      item.innerHTML = `<h2>Round ${round}</h2>`
+
+      // Запись атак 1го игрока
+      item.innerHTML += playerOne.attack(playerOne.damage, playerTwo);
       if (playerTwo.health <= 0) {
-        console.log(`${playerOne.name} win`);
+        item.innerHTML += `<h2>${playerOne.name} Win</h2>`;
+        list.appendChild(item)
         break;
       }
-      playerTwo.attack(playerTwo.damage, playerOne);
+
+      // Запись атак 2го игрока
+      item.innerHTML += playerTwo.attack(playerTwo.damage, playerOne);
       if (playerOne.health <= 0) {
-        console.log(`${playerTwo.name} win`);
+        item.innerHTML += `<h2>${playerTwo.name} win</h2>`;
+        list.appendChild(item)
         break;
       }
-      
+      //возвращаем итог раунда
+      list.appendChild(item)
+      round++
     } while (playerOne.health >= 0 || playerTwo.health >= 0);
+
+    document.getElementById("log").appendChild(list)
+    return 
+  }
+
+  render() {
+    let div = document.createElement("div");
+    div.innerHTML = `
+      <h1>win:${this.score.playerOne} ${this.playerOne.name} VS  ${
+      this.playerTwo.name
+    } ${this.score.playerTwo}:win</h1>
+      <div id="log">
+        <button onclick=game.startFight()>Start Fight</button>
+      </div>`;
+    return div;
   }
 }
 
+// Классы персонажей
 class Character {
   constructor(name) {
     this.id = id++;
@@ -68,15 +102,17 @@ class Character {
   }
 
   attack({ min, max, attacks }, target) {
+    let resultAttack = ""
     let damage = 0;
+
     for (let i = 0; i < attacks; i++) {
       let hit = Math.floor(Math.random() * (max + 1 - min)) + min;
-      console.log(hit);
       damage += hit;
+      resultAttack +=`${this.name} нанес ${hit} урона играку ${target.name}<br>` ;
     }
     target.health -= damage;
-    console.log(`${this.name} нанес ${damage} урона ${target.name}`);
-    return `${this.name} нанес ${damage} урона ${target.name}`;
+    resultAttack += `здоровья ${target.name} = ${target.health}<br>`
+    return resultAttack
   }
 }
 
@@ -96,5 +132,4 @@ class Human extends Character {
 
 const game = new Game();
 
-game.initGame(playerOne, playerTwo);
-game.startFight();
+
