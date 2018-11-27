@@ -49,7 +49,7 @@ class Cat extends Warrior {
     this.heal = heal;
   }
 
-  healing(target) {
+  ultimateSpell(target) {
     let rand = Math.random() * (10 - 1) + 1;
     let str = "";
     if (rand >= 5) {
@@ -69,7 +69,7 @@ class Dog extends Warrior {
     this.ultimate = ultimate;
   }
 
-  ultimateAttack(target) {
+  ultimateSpell(target) {
     let rand = Math.random() * (10 - 1) + 1;
     let str = "";
     let temp;
@@ -91,68 +91,74 @@ class Dog extends Warrior {
 //====================================================================================================
 
 class Fighter {
-  fighter(player1, player2) {
+  fighter(player, enemy) {
     let counter = 0;
     console.log(`Player one: 
-    Name: ${player1.name}
-    Heath: ${player1.hp}
-    Damage: ${player1.damage}`);
+    Name: ${player.name}
+    Heath: ${player.hp}
+    Damage: ${player.damage}`);
 
     console.log(`Player two: 
-    Name: ${player2.name}
-    Heath: ${player2.hp}
-    Damage: ${player2.damage}`);
+    Name: ${enemy.name}
+    Heath: ${enemy.hp}
+    Damage: ${enemy.damage}`);
 
-    while (player1.hp > 0 && player2.hp > 0) {
+    while (player.hp > 0 && enemy.hp > 0) {
       console.log(
         `=============================== Round ${++counter} ===============================`
       );
-      let rand = Math.random() * (10 - 1) + 1;
-      let chs = +prompt("Choose spell: 1 - default, 2 - ultimate");
+	  let chs = +prompt("Choose spell: 1 - default, 2 - ultimate");
+	  let rand = Math.random() * (10 - 1) + 1;
 
       if (chs === 1) {
-        player1.attack(player2);
+        player.attack(enemy);
       } else if (chs === 2) {
-        player1.healing(player2);
+        player.ultimateSpell(enemy);
       } else {
         alert("Stop fighting");
         console.log("End");
         return;
       }
       if (rand > 5) {
-        player2.attack(player1);
+        enemy.attack(player);
       } else {
-        player2.ultimateAttack(player1);
+        enemy.ultimateSpell(player);
       }
-      console.log(player1.result());
-      console.log(player2.result());
+      console.log(player.result());
+      console.log(enemy.result());
     }
 
-    if (player1.hp) {
-      console.log(player1.winner());
+    if (player.hp) {
+      console.log(player.winner());
     }
-    if (player2.hp) {
-      console.log(player2.winner());
+    if (enemy.hp) {
+      console.log(enemy.winner());
     }
   }
 
   chooser() {
     let catto = new Cat(cat);
-    let doggo = new Dog(dog);
+	let doggo = new Dog(dog);
+	let player;
+	let enemy;
     let hero = +prompt(
       "Choose your hero: ",
       "1 - if you want cat, 2 - if you want dog"
     );
     if (hero === 1) {
-      catto.name = prompt("Name your cat");
+	  catto.name = prompt("Name your cat");
+	  player = catto;
+	  enemy = doggo;
     } else if (hero === 2) {
-      doggo.name = prompt("Name your dog");
+	  doggo.name = prompt("Name your dog");
+	  player = doggo;
+	  enemy = catto;
     } else {
       alert("Exit the game");
       console.log("End");
       return;
     }
-    this.fighter(catto, doggo);
+    this.fighter(player, enemy);
   }
 }
 

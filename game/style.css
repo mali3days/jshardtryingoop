@@ -1,17 +1,17 @@
 #container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
-.hero {
+/* .hero {
   width: 300px;
   text-align: center;
 }
 
 .winner {
   background-color: aquamarine;
-}
+} */
 
 button {
   width: 100px;
