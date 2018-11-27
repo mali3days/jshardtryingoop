@@ -1,0 +1,21 @@
+body {
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: rgb(14, 12, 12);
+    color: white;
+}
+
+.root {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.hero-info {
+    display: flex;
+    justify-content: space-around;
+}
+
+.game-field {
+    border: 1px solid gray;
+    width: 70%;
+}
