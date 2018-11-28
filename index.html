@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="main.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container-header">
+        <button id="restart" type="button" class="button" onclick="window.location.href=window.location.href">Restart</button>
+        <button id="buttStart" class="button" onclick="buttStart()">Start</button>
+        <button id="strikeFirstEnemy" class="button" onclick="strikeFirstEnemy()">Strike first enemy</button>
+        <button id="strikeSecondEnemy" class="button" onclick="strikeSecondEnemy()">Strike second enemy</button>
+      </div>
+    </header>
+    <main class="main">
+      <div class="container">
+        <div id="startBar"></div>
+        <div class="enemy-bar">
+          <div class="leftContent"><div id="leftContent"></div></div>
+          <div class="rightContent"><div id="rightContent"></div></div>
+        </div>
+        <div id="finishBar" class="finish-bar"></div>
+      </div>
+    </main>
+  </body>
+</html>
