@@ -37,6 +37,7 @@ class Game {
     const { playerTwo, playerOne } = this;
     let round = 1;
     let list = document.createElement("ul");
+    list.innerHTML = ""
 
     do {
 
@@ -47,7 +48,9 @@ class Game {
       item.innerHTML += playerOne.attack(playerOne.damage, playerTwo);
       if (playerTwo.health <= 0) {
         item.innerHTML += `<h2>${playerOne.name} Win</h2>`;
-        list.appendChild(item)
+        list.appendChild(item);
+        playerOne.health = 100;
+        playerTwo.health = 100;
         break;
       }
 
@@ -55,7 +58,9 @@ class Game {
       item.innerHTML += playerTwo.attack(playerTwo.damage, playerOne);
       if (playerOne.health <= 0) {
         item.innerHTML += `<h2>${playerTwo.name} win</h2>`;
-        list.appendChild(item)
+        list.appendChild(item);
+        playerOne.health = 100;
+        playerTwo.health = 100;
         break;
       }
       //возвращаем итог раунда
