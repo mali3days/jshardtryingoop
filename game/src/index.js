@@ -1,5 +1,9 @@
+import _ from 'lodash';
+import './style.scss';
+import Image from './cat.jpg';
+
 class Warrior {
-  constructor({ hp, damage }, name = "Enemy") {
+  constructor({ hp, damage }, name = 'Enemy') {
     this.nick = name;
     this.health = hp;
     this.damage = damage;
@@ -50,14 +54,14 @@ class Cat extends Warrior {
   }
 
   ultimateSpell(target) {
-    let rand = Math.random() * (10 - 1) + 1;
-    let str = "";
+    const rand = Math.random() * (10 - 1) + 1;
+    let str = '';
     if (rand >= 5) {
       this.hp += this.heal;
-      str = "and healed himself";
+      str = 'and healed himself';
     } else {
       target.hp += this.heal;
-      str = "and healed his enemy";
+      str = 'and healed his enemy';
     }
     console.log(`${this.name} used heal ${str}`);
   }
@@ -70,15 +74,14 @@ class Dog extends Warrior {
   }
 
   ultimateSpell(target) {
-    let rand = Math.random() * (10 - 1) + 1;
-    let str = "";
-    let temp;
+    const rand = Math.random() * (10 - 1) + 1;
+    let str = '';
     if (rand >= 5) {
       target.hp += this.ultimate;
-      str = "and healed his enemy";
+      str = 'and healed his enemy';
     } else {
       target.hp -= this.damage - this.ultimate;
-      str = "and damaged his enemy whith additional damage";
+      str = 'and damaged his enemy whith additional damage';
     }
 
     console.log(`${this.name} used ultimate attack ${str}`);
@@ -88,11 +91,14 @@ class Dog extends Warrior {
   }
 }
 
-//====================================================================================================
+//= ===================================================================================================
 
 class Fighter {
+  constructor() {
+    this.counter = 0;
+  }
+
   fighter(player, enemy) {
-    let counter = 0;
     console.log(`Player one: 
     Name: ${player.name}
     Heath: ${player.hp}
@@ -105,18 +111,18 @@ class Fighter {
 
     while (player.hp > 0 && enemy.hp > 0) {
       console.log(
-        `=============================== Round ${++counter} ===============================`
+        `=============================== Round ${++this.counter} ===============================`,
       );
-	  let chs = +prompt("Choose spell: 1 - default, 2 - ultimate");
-	  let rand = Math.random() * (10 - 1) + 1;
+      const chs = +prompt('Choose spell: 1 - default, 2 - ultimate');
+      const rand = Math.random() * (10 - 1) + 1;
 
       if (chs === 1) {
         player.attack(enemy);
       } else if (chs === 2) {
         player.ultimateSpell(enemy);
       } else {
-        alert("Stop fighting");
-        console.log("End");
+        alert('Stop fighting');
+        console.log('End');
         return;
       }
       if (rand > 5) {
@@ -137,25 +143,22 @@ class Fighter {
   }
 
   chooser() {
-    let catto = new Cat(cat);
-	let doggo = new Dog(dog);
-	let player;
-	let enemy;
-    let hero = +prompt(
-      "Choose your hero: ",
-      "1 - if you want cat, 2 - if you want dog"
-    );
+    const catto = new Cat(cat);
+    const doggo = new Dog(dog);
+    let player;
+    let enemy;
+    const hero = +prompt('Choose your hero: ', '1 - if you want cat, 2 - if you want dog');
     if (hero === 1) {
-	  catto.name = prompt("Name your cat");
-	  player = catto;
-	  enemy = doggo;
+      catto.name = prompt('Name your cat');
+      player = catto;
+      enemy = doggo;
     } else if (hero === 2) {
-	  doggo.name = prompt("Name your dog");
-	  player = doggo;
-	  enemy = catto;
+      doggo.name = prompt('Name your dog');
+      player = doggo;
+      enemy = catto;
     } else {
-      alert("Exit the game");
-      console.log("End");
+      alert('Exit the game');
+      console.log('End');
       return;
     }
     this.fighter(player, enemy);
@@ -164,14 +167,18 @@ class Fighter {
 
 const cat = {
   hp: 300,
-  damage: 15,
-  heal: 15
+  damage: 30,
+  heal: 15,
 };
 
 const dog = {
   hp: 350,
-  damage: 15,
-  ultimate: 5
+  damage: 30,
+  ultimate: 5,
 };
 
-let fight = new Fighter();
+const fight = new Fighter();
+
+document.getElementById('start').addEventListener('click', () => {
+  fight.chooser();
+});
