@@ -10,6 +10,9 @@
   "license": "",
   "devDependencies": {
     "browser-sync": "latest",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "gulp": "latest",
     "gulp-autoprefixer": "latest",
     "gulp-connect": "latest",
