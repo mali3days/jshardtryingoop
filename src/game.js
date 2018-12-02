@@ -61,7 +61,7 @@ class Game {
       round++;
     } while (playerOne.health >= 0 || playerTwo.health >= 0);
 
-    document.getElementById('log').innerHTML = "";
+    document.getElementById('log').innerHTML = '';
     document.getElementById('log').appendChild(list);
   }
 
