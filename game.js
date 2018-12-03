@@ -7,9 +7,7 @@ class Game {
     gamer[this.id] = this;
     this.score = 0;
     this.score2 = 0;
-    this.state = {
-      id : this.id
-    }
+
   }
   render() {
     document.querySelector(".score-player1").innerHTML = this.score;
@@ -37,11 +35,8 @@ class Hero extends Game {
   }
 
   attack() {
-    if (this.id === 0) {
-      gamer[0].reduceHp(this.id, this.damage);
-    } else {
-      gamer[1].reduceHp(this.id, this.damage);
-    }
+      gamer[this.id].reduceHp(this.id, this.damage);
+      gamer[this.id].reduceHp(this.id, this.damage);
   }
 
   addScore(attackUser) {
